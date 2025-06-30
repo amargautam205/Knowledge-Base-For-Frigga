@@ -7,16 +7,14 @@ class CustomButton {
  Widget primaryButton({
     required double height,
     required double width,
-    required VoidCallback onPressed,
+    VoidCallback? onPressed,
     required String buttonText,
     required Color buttonTextColor,
     required Color buttonBackgroundColor,
     double fontSize = 14,
   }) {
     return GestureDetector(
-      onTap:() {
-        onPressed();
-      },
+      onTap:  onPressed == null ? null : () => onPressed!(),
       child: Container(
         height: height,
         width: width,
