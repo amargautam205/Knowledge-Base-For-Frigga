@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:knowledge_base_front/screens/home_screen/bloc/home_screen_bloc.dart';
+import 'package:knowledge_base_front/screens/home_screen/bloc/home_screen_event.dart';
+import 'package:knowledge_base_front/screens/home_screen/home_screen.dart';
 import 'package:knowledge_base_front/screens/login_screen/bloc/login_screen_bloc.dart';
 import 'package:knowledge_base_front/screens/login_screen/bloc/login_screen_event.dart';
 import 'package:knowledge_base_front/screens/login_screen/bloc/login_screen_state.dart';
@@ -60,8 +63,18 @@ class _LoginScreenBodyState extends State<_LoginScreenBody> {
             if (state is LoginSuccess) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SignupScreen()),
+                MaterialPageRoute(
+                  builder: (_) => BlocProvider(
+                    create: (_) => HomeScreenBloc()..add(FetchDocumentsEvent()),
+                    child: const HomeScreen(),
+                  ),
+                ),
               );
+
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => HomeScreen()),
+              // );
             } else if (state is LoginFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.error)),
@@ -76,7 +89,8 @@ class _LoginScreenBodyState extends State<_LoginScreenBody> {
               children: [
                 Column(
                   children: [
-                    Image.asset('assets/images/doc_login_image.png', width: 200),
+                    Image.asset('assets/images/doc_login_image.png',
+                        width: 200),
                     const SizedBox(height: 10),
                     const Text(
                       "Login Screen",
@@ -128,8 +142,9 @@ class _LoginScreenBodyState extends State<_LoginScreenBody> {
                               buttonBackgroundColor:
                                   AppTheme.primaryButtonBackgroundColor,
                               buttonTextColor: AppTheme.primaryButtonTextColor,
-                              onPressed:
-                                  state is LoginLoading ? null : _onLoginPressed,
+                              onPressed: state is LoginLoading
+                                  ? null
+                                  : _onLoginPressed,
                             );
                           },
                         ),

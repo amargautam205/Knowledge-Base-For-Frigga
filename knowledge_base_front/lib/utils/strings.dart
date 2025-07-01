@@ -6,4 +6,7 @@ class AppStrings {
       welcomeBack = "Welcome Back!",
       weAreExcited = "We're excited to have you back !",
       haveAnAccount = "Existing user ?";
+
+  static const letsGetStarted = "Let's get you registered!";
+  static const alreadyHaveAnAccount = "Already have an account?";
 }
