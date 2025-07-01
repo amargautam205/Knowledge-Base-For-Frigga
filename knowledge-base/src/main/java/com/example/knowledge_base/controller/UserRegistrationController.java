@@ -17,19 +17,19 @@ public class UserRegistrationController {
     @Autowired
     private UserRegistrationService userService;
     private Logger logger = LoggerFactory.getLogger(UserRegistrationController.class);
-        @PostMapping("/createUserRegistration")
+    @PostMapping("/createUserRegistration")
     public ResponseEntity<Object> createUserRegistration(@RequestBody UserRegistrationDTO userRegistrationDTO){
         try {
             UserRegistration userRegistration = UserRegistrationConverter.convertToEntity(userRegistrationDTO);
             userService.createUserRegistration(userRegistration);
             logger.info("Create New UserRegistration with ID: {}" , userRegistration.getUserId());
-            return ResponseUtil.createSuccessResponse("Object created Successfully.");
+            return ResponseUtil.createSuccessResponse("User created Successfully.");
         }catch (Exception ex){
             logger.error("failed to create UserRegistration: {}", ex.getMessage());
             return ResponseUtil.createErrorResponse("Failed to create UserRegistration", ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("getUserRegistrationById/{user_id}")
+    /*  @GetMapping("getUserRegistrationById/{user_id}")
     public ResponseEntity<Object> getUserRegistrationById(@PathVariable Long user_id){
         try {
             UserRegistration userRegistration = new UserRegistration();
@@ -67,5 +67,5 @@ public class UserRegistrationController {
             logger.error("Failed to update User: userId={}", user_id);
             return ResponseUtil.updateErrorResponse("UserRegistration not updated", ex.getMessage());
         }
-    }
+    }*/
 }

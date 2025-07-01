@@ -9,8 +9,6 @@ public class UserRegistrationConverter {
         userRegistrationDTO.setUserId(userRegistration.getUserId());
         userRegistrationDTO.setFirstName(userRegistration.getFirstName());
         userRegistrationDTO.setLastName(userRegistration.getLastName());
-        userRegistrationDTO.setAddress(userRegistration.getAddress());
-        userRegistrationDTO.setMobile(userRegistration.getMobile());
         userRegistrationDTO.setEmail(userRegistration.getEmail());
         userRegistrationDTO.setPassword(userRegistration.getPassword());
         return userRegistrationDTO;
@@ -20,8 +18,6 @@ public class UserRegistrationConverter {
         userRegistration.setUserId(userRegistrationDTO.getUserId());
         userRegistration.setFirstName(userRegistrationDTO.getFirstName());
         userRegistration.setLastName(userRegistrationDTO.getLastName());
-        userRegistration.setAddress(userRegistrationDTO.getAddress());
-        userRegistration.setMobile(userRegistrationDTO.getMobile());
         userRegistration.setEmail(userRegistrationDTO.getEmail());
         userRegistration.setPassword(userRegistrationDTO.getPassword());
         return userRegistration;
