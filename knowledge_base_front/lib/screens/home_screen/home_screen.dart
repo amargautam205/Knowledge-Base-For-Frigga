@@ -17,10 +17,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+   final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
     context.read<HomeScreenBloc>().add(FetchDocumentsEvent());
+
+    // Rebuild when search text changes (for suffix icon visibility)
+    _searchController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -43,7 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(
                     builder: (_) => const CreateDocumentScreen(),
                   ),
-                );
+                ).then((_) {
+                  // Trigger re-fetch of documents
+                  context.read<HomeScreenBloc>().add(FetchDocumentsEvent());
+                });
+                ;
               },
               tooltip: 'New Document',
             ),
@@ -54,15 +64,32 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
+               TextField(
+                controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Search documents...',
                   prefixIcon: const Icon(Icons.search),
+                  suffixIcon: _searchController.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            _searchController.clear();
+                            FocusScope.of(context).unfocus(); // close keyboard
+                            context.read<HomeScreenBloc>().add(FetchDocumentsEvent());
+                          },
+                        )
+                      : null,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                onSubmitted: (value) {},
+                onSubmitted: (value) {
+                  if (value.trim().isNotEmpty) {
+                    context.read<HomeScreenBloc>().add(
+                          SearchDocumentsEvent(keyword: value.trim()),
+                        );
+                  }
+                },
               ),
               const SizedBox(height: 20),
               Text(
@@ -103,7 +130,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     content: doc.content,
                                   ),
                                 ),
-                              );
+                              ).then((_) {
+                                // Trigger re-fetch of documents
+                                context
+                                    .read<HomeScreenBloc>()
+                                    .add(FetchDocumentsEvent());
+                              });
+                              ;
                             },
                             child: Card(
                               elevation: 1,

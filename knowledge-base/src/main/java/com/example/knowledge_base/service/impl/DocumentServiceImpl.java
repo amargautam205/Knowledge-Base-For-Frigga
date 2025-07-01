@@ -46,5 +46,13 @@ public class DocumentServiceImpl implements DocumentService {
         documentRepository.deleteById(id);
     }
 
+    @Override
+    public List<Document> searchDocuments(String keyword, String email) {
+        return documentRepository.searchDocumentsByKeywordAndEmail(keyword, email);
+    }
+    @Override
+    public List<Document> getAllPublicDocumentsExceptMyOwn(String email) {
+        return documentRepository.findAllPublicDocumentsExcludingUser(email);
+    }
 
 }

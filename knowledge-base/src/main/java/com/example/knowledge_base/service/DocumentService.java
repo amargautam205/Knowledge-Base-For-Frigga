@@ -18,4 +18,8 @@ public interface DocumentService {
     void delete(Long id);
 
 
+    List<Document> searchDocuments(String keyword, String email);
+
+    public List<Document> getAllPublicDocumentsExceptMyOwn(String email);
+
 }

@@ -11,7 +11,7 @@ class CreateDocumentScreenPresenter {
       data: {
         'title': title,
         'content': content,
-        'isPublic': isPublic,
+        'is_public': isPublic,
       },
     );
 

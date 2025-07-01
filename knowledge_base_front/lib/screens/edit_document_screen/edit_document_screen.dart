@@ -58,7 +58,7 @@ class _EditDocumentScreenState extends State<EditDocumentScreen> {
         data: {
           "title": updatedTitle,
           "content": updatedContent,
-          "isPublic": widget.document.isPublic, // no toggle here yet
+          "is_public": widget.document.isPublic, // no toggle here yet
         },
       );
       ScaffoldMessenger.of(context).showSnackBar(
