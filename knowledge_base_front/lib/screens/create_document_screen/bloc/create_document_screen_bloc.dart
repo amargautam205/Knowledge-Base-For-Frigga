@@ -19,8 +19,7 @@ class CreateDocumentScreenBloc
     } catch (e) {
       print("Exception occuring from here."+ e.toString());
       emit(CreateDocumentScreenFailure(
-        error: e.toString()));
-          // error: e.toString().replaceAll("Exception: ", "")));
+          error: e.toString().replaceAll("Exception: ", "")));
     }
   }
 }

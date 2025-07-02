@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:knowledge_base_front/screens/create_document_screen/create_document_screen.dart';
 import 'package:knowledge_base_front/screens/edit_document_screen/edit_document_screen.dart';
-import 'package:knowledge_base_front/screens/signup_screen/signup_screen.dart';
+import 'package:knowledge_base_front/screens/login_screen/login_screen.dart';
 import 'package:knowledge_base_front/screens/view_document_screen/view_document_screen.dart';
 import 'package:knowledge_base_front/screens/home_screen/bloc/home_screen_bloc.dart';
 import 'package:knowledge_base_front/screens/home_screen/bloc/home_screen_event.dart';
 import 'package:knowledge_base_front/screens/home_screen/bloc/home_screen_state.dart';
 import 'package:knowledge_base_front/utils/app_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-   final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -29,6 +30,22 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> _logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // clear all stored data
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Logged out successfully")),
+    );
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const LoginScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,11 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.white,
           elevation: 0,
           title: Text(
-            'Knowledge Base',
+            'Task By Frigga',
             style: AppTheme.headingTextStyle.copyWith(fontSize: 24),
           ),
           actions: [
             IconButton(
+              iconSize: 35,
               icon: const Icon(Icons.add_circle_outline, color: Colors.blue),
               onPressed: () {
                 Navigator.push(
@@ -57,6 +75,14 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               tooltip: 'New Document',
             ),
+
+            // 🔓 Logout Button
+            IconButton(
+              iconSize: 35,
+              icon: const Icon(Icons.logout, color: Colors.red),
+              onPressed: _logout,
+              tooltip: 'Logout',
+            ),
           ],
         ),
         body: Padding(
@@ -64,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               TextField(
+              TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Search documents...',
@@ -75,7 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             _searchController.clear();
                             FocusScope.of(context).unfocus(); // close keyboard
-                            context.read<HomeScreenBloc>().add(FetchDocumentsEvent());
+                            context
+                                .read<HomeScreenBloc>()
+                                .add(FetchDocumentsEvent());
                           },
                         )
                       : null,
@@ -198,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     const SizedBox(height: 2),
                                     Text(
-                                      doc.lastModifiedAt.split('T')[0],
+                                      "Last Modify: ${doc.lastModifiedAt.split('T')[0]}",
                                       style: AppTheme.bodyTextStyle.copyWith(
                                         fontSize: 10,
                                         color: Colors.grey.shade600,

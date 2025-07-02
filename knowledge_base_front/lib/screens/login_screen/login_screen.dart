@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:knowledge_base_front/screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:knowledge_base_front/screens/home_screen/bloc/home_screen_bloc.dart';
 import 'package:knowledge_base_front/screens/home_screen/bloc/home_screen_event.dart';
 import 'package:knowledge_base_front/screens/home_screen/home_screen.dart';
@@ -61,7 +61,7 @@ class _LoginScreenBodyState extends State<_LoginScreenBody> {
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (_) => BlocProvider(
@@ -70,11 +70,6 @@ class _LoginScreenBodyState extends State<_LoginScreenBody> {
                   ),
                 ),
               );
-
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => HomeScreen()),
-              // );
             } else if (state is LoginFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.error)),
@@ -93,7 +88,7 @@ class _LoginScreenBodyState extends State<_LoginScreenBody> {
                         width: 200),
                     const SizedBox(height: 10),
                     const Text(
-                      "Login Screen",
+                      "Login",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
@@ -125,9 +120,17 @@ class _LoginScreenBodyState extends State<_LoginScreenBody> {
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
-                              print("Forget Password Link.");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ForgotPasswordScreen()),
+                              );
                             },
-                            child: const Text("Forgot Password?"),
+                            child: const Text(
+                              "Forgot Password?",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
