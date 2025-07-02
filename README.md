@@ -49,21 +49,21 @@
 
 # Clone the project
 git clone https://github.com/amargautam205/Knowledge-Base-For-Frigga.git
-open knowledge_base_front folder in vs code/AndroidStudio (front-end code)
-open knowledge_base in vs Intellij (Back-end code)
+Open the knowledge_base_front folder in VS Code/Android Studio (front-end code)
+Open a knowledge_base folder in IntelliJ (Back-end code)
 
-create database using mysql (SQL) Name: knowledge_base
-set database user/password : root 
+Create a database using MySQL (SQL) Name: knowledge_base
+set database user/password: root 
 
-or you can update application.prop for own database
+Or you can update the application.prop for your database
 # Update application.properties
 spring.datasource.url=jdbc:mysql://localhost:3306/knowledge_base
 spring.datasource.username=root
 spring.datasource.password=root
 
 # Run the application
-run the application from both intellij and VS code
+Run the application from both IntelliJ and VS Code
 
 Demo credential:
-email :- mail2softdev@gmail.com
-password :- 12345
+email:- mail2softdev@gmail.com
+password:- 12345
