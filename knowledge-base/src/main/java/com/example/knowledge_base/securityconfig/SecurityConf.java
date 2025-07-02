@@ -35,6 +35,7 @@ public class SecurityConf {
                         .authenticated()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/userRegistration/createUserRegistration").permitAll()
+                        .requestMatchers("/userRegistration/forgot-password").permitAll()
                         .anyRequest()
                         .authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))

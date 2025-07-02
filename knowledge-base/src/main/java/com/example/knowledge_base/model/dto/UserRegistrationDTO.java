@@ -12,8 +12,6 @@ public class UserRegistrationDTO {
     private Long userId;
     private String firstName;
     private String lastName;
-    private Long mobile;
-    private String address;
     private String email;
     private String password;
 }
