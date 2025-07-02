@@ -7,6 +7,6 @@ class ApiConst{
   static final String getPublicDocuments = "api/documents/public";
   static final String updateDocument = "api/documents";
   static final String searchDocument = "api/documents/search";
-  static final String forgotPassword = "api/documents/search";
+  static final String forgotPassword = "userRegistration/forgot-password";
 
 }

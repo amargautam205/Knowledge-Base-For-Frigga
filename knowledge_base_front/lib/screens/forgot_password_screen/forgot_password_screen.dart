@@ -7,14 +7,26 @@ import 'package:knowledge_base_front/utils/app_theme.dart';
 import 'package:knowledge_base_front/widget/button_widget.dart';
 import 'package:knowledge_base_front/widget/custom_textfield.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
+class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ForgotPasswordBloc(),
+      child: const ForgotPasswordBody(),
+    );
+  }
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class ForgotPasswordBody extends StatefulWidget {
+  const ForgotPasswordBody({super.key});
+
+  @override
+  State<ForgotPasswordBody> createState() => _ForgotPasswordBodyState();
+}
+
+class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
   final TextEditingController emailController = TextEditingController();
 
   void _onSubmit() {
@@ -25,66 +37,68 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       );
       return;
     }
-    context.read<ForgotPasswordBloc>().add(ForgotPasswordSubmitted(email: email));
+
+    context
+        .read<ForgotPasswordBloc>()
+        .add(ForgotPasswordSubmitted(email: email));
   }
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
-    return BlocProvider(
-      create: (_) => ForgotPasswordBloc(),
-      child: Scaffold(
-        appBar: AppBar(title: const Text("Forgot Password")),
-        body: BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
-          listener: (context, state) {
-            if (state is ForgotPasswordSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Reset link sent to your email")),
-              );
-              Navigator.pop(context);
-            } else if (state is ForgotPasswordFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.error)),
-              );
-            }
-          },
-          child: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset('assets/images/doc_login_image.png', width: 200),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "Forget Password",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                    const SizedBox(height: 20),
-                    CustomTextField().primaryTextField(
-                      context: context,
-                      textEditingController: emailController,
-                      hintText: "Email",
-                    ),
-                    const SizedBox(height: 30),
-                    BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
-                      builder: (context, state) {
-                        return CustomButton().primaryButton(
-                          height: screenSize.height * 0.07,
-                          width: screenSize.width * 0.4,
-                          buttonText: state is ForgotPasswordLoading
-                              ? "Sending..."
-                              : "Send Reset Link",
-                          buttonBackgroundColor: AppTheme.primaryButtonBackgroundColor,
-                          buttonTextColor: AppTheme.primaryButtonTextColor,
-                          onPressed: state is ForgotPasswordLoading ? null : _onSubmit,
-                        );
-                      },
-                    ),
-                  ],
-                ),
+    return Scaffold(
+      appBar: AppBar(title: const Text("Forgot Password")),
+      body: BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
+        listener: (context, state) {
+          if (state is ForgotPasswordSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Reset link sent to your email")),
+            );
+            Navigator.pop(context);
+          } else if (state is ForgotPasswordFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.error)),
+            );
+          }
+        },
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset('assets/images/doc_login_image.png', width: 200),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Forget Password",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  const SizedBox(height: 20),
+                  CustomTextField().primaryTextField(
+                    context: context,
+                    textEditingController: emailController,
+                    hintText: "Email",
+                  ),
+                  const SizedBox(height: 30),
+                  BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
+                    builder: (context, state) {
+                      return CustomButton().primaryButton(
+                        height: screenSize.height * 0.07,
+                        width: screenSize.width * 0.4,
+                        buttonText: state is ForgotPasswordLoading
+                            ? "Sending..."
+                            : "Send Reset Link",
+                        buttonBackgroundColor:
+                            AppTheme.primaryButtonBackgroundColor,
+                        buttonTextColor: AppTheme.primaryButtonTextColor,
+                        onPressed:
+                            state is ForgotPasswordLoading ? null : _onSubmit,
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ),

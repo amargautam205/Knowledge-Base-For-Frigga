@@ -1,6 +1,5 @@
 import 'package:knowledge_base_front/repository/api_repository.dart';
 import 'package:knowledge_base_front/utils/api_const.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupScreenPresenter {
   SignupScreenPresenter();

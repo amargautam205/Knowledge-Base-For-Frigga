@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:knowledge_base_front/screens/signup_screen/bloc/signup_screen_event.dart';
 import 'package:knowledge_base_front/screens/signup_screen/bloc/signup_screen_state.dart';
-import 'package:knowledge_base_front/screens/signup_screen/login_screen_presenter.dart';
+import 'package:knowledge_base_front/screens/signup_screen/signup_screen_presenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {

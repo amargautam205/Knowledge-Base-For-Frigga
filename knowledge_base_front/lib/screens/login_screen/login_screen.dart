@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:knowledge_base_front/screens/forgot_password_screen/bloc/forgot_password_screen_bloc.dart';
 import 'package:knowledge_base_front/screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:knowledge_base_front/screens/home_screen/bloc/home_screen_bloc.dart';
 import 'package:knowledge_base_front/screens/home_screen/bloc/home_screen_event.dart';
@@ -123,8 +124,11 @@ class _LoginScreenBodyState extends State<_LoginScreenBody> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        ForgotPasswordScreen()),
+                                  builder: (_) => BlocProvider(
+                                    create: (_) => ForgotPasswordBloc(),
+                                    child: ForgotPasswordScreen(),
+                                  ),
+                                ),
                               );
                             },
                             child: const Text(
