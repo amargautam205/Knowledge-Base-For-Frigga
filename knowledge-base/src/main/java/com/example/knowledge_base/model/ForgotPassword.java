@@ -21,7 +21,7 @@ public class ForgotPassword {
     private String token;
 
     @OneToOne
-    private UserRegistration user;
+    private UserRegistration userId;
 
     private LocalDateTime expiryDate;
 }

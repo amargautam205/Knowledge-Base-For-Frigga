@@ -59,19 +59,6 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         return userRegistrationList;
     }
 
-//    @Override
-//    public boolean deleteUserRegistrationById(long user_id) {
-//        userRepositiory.deleteById(user_id);
-//        return true;
-//    }
-//
-//    @Override
-//    public void updateUserRegistration(UserRegistration userRegistration) {
-//        if (userRepositiory.existsById(userRegistration.getUserId())) {
-//            userRepositiory.save(userRegistration);
-//        }
-//    }
-
     @Override
     public void initiateForgotPassword(String email) {
         UserRegistration user = userRepository.findByEmail(email);
@@ -83,7 +70,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         String token = UUID.randomUUID().toString();
         ForgotPassword resetToken = new ForgotPassword();
         resetToken.setToken(token);
-        resetToken.setUser(user);
+        resetToken.setUserId(user);
         resetToken.setExpiryDate(LocalDateTime.now().plusHours(1));
         forgotPasswordRepository.save(resetToken);
 
